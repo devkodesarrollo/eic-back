@@ -32,7 +32,10 @@ class AuthController extends Controller
         // Generar el token JWT
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(['token' => $token], 201);
+        return response()->json([
+            'token' => $token, 
+            'message' => "Usuario registrado correctamente"
+        ], 201);
     }
 
     // Login de usuario
@@ -64,10 +67,12 @@ class AuthController extends Controller
         ]);
     }
 
-    // Obtener el perfil del usuario (requiere autenticación)
-    public function me(Request $request)
+    // Obtener la lista de usuarios.
+    public function all()
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        return response()->json($user);
+        $users = User::all();
+        return response()->json($users);
     }
 }
+
+
