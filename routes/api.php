@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -9,8 +10,12 @@ Route::post('login', [AuthController::class, 'login']);
 // Route::group(['middleware' => ['auth:api']], function () {
 
     Route::group(['prefix' => 'users'], function () {
-        Route::get('', [AuthController::class, 'all']);
-        
+        Route::get('', [UserController::class, 'all']);
+        Route::get('/{id}', [UserController::class, 'find']);
+        Route::post('', [UserController::class, 'save']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::patch('/{id}', [UserController::class, 'changeField']);
+        Route::delete('/{id}', [UserController::class, 'delete']);
     });
     
 // });

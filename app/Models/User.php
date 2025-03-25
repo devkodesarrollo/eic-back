@@ -19,6 +19,19 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'state',
+        'role_id'
+    ];
+
+    public $rules = [
+        'name' => 'required',
+        'email' => 'required',
+        'password' => 'required',
+        'role_id' => 'required'
+    ];
+
+    public $messages = [
+        'role_id.required' => 'El campo rol es obligatorio.'
     ];
 
     /**
@@ -60,4 +73,19 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function getRules($isPatch = false, $requestData = [])
+    {
+        $rules = $this->rules;
+
+        if ($isPatch) {
+            foreach ($rules as $key => $rule) {
+                if (!array_key_exists($key, $requestData)) {
+                    $rules[$key] = str_replace('required|', '', $rule);
+                    $rules[$key] = str_replace('required', '', $rules[$key]);
+                }
+            }
+        }
+
+        return $rules;
+    }
 }

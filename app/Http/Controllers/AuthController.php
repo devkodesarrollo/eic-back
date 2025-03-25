@@ -66,13 +66,6 @@ class AuthController extends Controller
             'token' => $token
         ]);
     }
-
-    // Obtener la lista de usuarios.
-    public function all()
-    {
-        $users = User::all();
-        return response()->json($users);
-    }
 }
 
 
