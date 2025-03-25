@@ -12,8 +12,6 @@ use App\Services\User\ChangeFieldUserService;
 use App\Services\User\DeleteUserService;
 
 class UserController extends Controller{
-
-    
     private $findUserService;
     private $getAllUserService;
     private $createUserService;
