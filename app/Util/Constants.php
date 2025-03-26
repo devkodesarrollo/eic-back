@@ -31,13 +31,16 @@ class Constants
 
     //ATTRIBUTES MODEL USER
     const USER_ID = "id";
+    const USER_FULL_NAME = "full_name";
     const USER_NAME = "name";
     const USER_EMAIL = "email";
     const USER_PASSWORD = "password";
     const USER_STATE = "state";
     const USER_ROLE_ID = "role_id";
 
+    const USER_LOGIN_INVALID = "No se pudo iniciar sesión, intente nuevamente.";
     const USER_CREATE_SUCCESS = "Usuario creado correctamente.";
+    const USER_REGISTER_SUCCESS = "Usuario registrado correctamente.";
     const USER_CREATE_ERROR = "Ocurrió un error al crear el usuario, intente nuevamente.";
     const USER_CREATE_ROLE_NOT_FOUND = "El rol que intenta asignar al usuario no existe.";
     const USER_CREATE_EMAIL_EXIST = "Ya existe un usuario registrado con el email ingresado.";
@@ -46,4 +49,9 @@ class Constants
     const USER_UPDATE_ERROR = "Ocurrió un error al actualizar el usuario, intente nuevamente.";
     const USER_DELETE_SUCCESS = "Usuario eliminado correctamente.";
     const USER_DELETE_ERROR = "Ocurrió un error al eliminar el usuario, intente nuevamente.";
+
+    const USER_RULES_NAME = "required|string|max:255";
+    const USER_RULES_EMAIL = "required|string|email|max:255|unique:users";
+    const USER_RULES_EMAIL_2 = "required|string|email";
+    const USER_RULES_PASSWORD = "required|string";
 }

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Util\Constants;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
@@ -13,28 +14,28 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string',
+            Constants::USER_NAME => Constants::USER_RULES_NAME,
+            Constants::USER_EMAIL => Constants::USER_RULES_EMAIL,
+            Constants::USER_PASSWORD => Constants::USER_RULES_PASSWORD,
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            return response()->json([Constants::ERROR => $validator->errors()], 400);
         }
 
         // Crear un nuevo usuario
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            Constants::USER_NAME => $request->name,
+            Constants::USER_EMAIL => $request->email,
+            Constants::USER_PASSWORD => Hash::make($request->password),
         ]);
 
         // Generar el token JWT
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
-            'token' => $token, 
-            'message' => "Usuario registrado correctamente"
+            Constants::TOKEN => $token, 
+            Constants::MESSAGE => Constants::USER_REGISTER_SUCCESS
         ], 201);
     }
 
@@ -42,28 +43,29 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+            Constants::USER_EMAIL => Constants::USER_RULES_EMAIL_2,
+            Constants::USER_PASSWORD => Constants::USER_RULES_PASSWORD,
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            return response()->json([Constants::ERROR => $validator->errors()], 400);
         }
 
         // Intentar autenticar al usuario y generar el token
-        if (!$token = JWTAuth::attempt($request->only('email', 'password'))) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = JWTAuth::attempt($request->only(Constants::USER_EMAIL, Constants::USER_PASSWORD))) {
+            return response()->json([Constants::ERROR => Constants::USER_LOGIN_INVALID], 401);
         }
+
         $post = (object) $request->all();
 
-        $user = User::where('email', $post->email)->first();
+        $user = User::where(Constants::USER_EMAIL, $post->email)->first();
 
         return response()->json([
-            'user' => (object) [
-                "full_name" => $user->name,
-                "email" => $user->email
+            Constants::USER => (object) [
+                Constants::USER_FULL_NAME => $user->name,
+                Constants::USER_EMAIL => $user->email
             ],
-            'token' => $token
+            Constants::TOKEN => $token
         ]);
     }
 }
