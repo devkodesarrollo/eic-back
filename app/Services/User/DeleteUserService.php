@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Repositories\UserRepository;
 use App\Util\Constants;
+use App\Exceptions\ValidationException;
 
 class DeleteUserService{
 
@@ -15,12 +16,7 @@ class DeleteUserService{
 
     public function delete($id){
         $model = $this->repository->find($id);
-        if(!$model){
-            $model = $this->repository->new();
-            $model->errors = (array) Constants::USER_NOT_FOUND;
-            return $model;
-        }
-
+        if(!$model) throw new ValidationException((array) Constants::USER_NOT_FOUND);
         $delete = $this->repository->delete($model);
         return $delete;
     }

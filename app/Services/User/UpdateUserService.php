@@ -6,6 +6,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
 use App\Models\User;
 use App\Util\Constants;
+use App\Exceptions\ValidationException;
 
 class UpdateUserService{
 
@@ -22,32 +23,21 @@ class UpdateUserService{
 
     public function update($request, $id){
         $model = $this->repository->find($id);
-        if(!$model){
-            $model = $this->repository->new();
-            $model->errors = (array) Constants::USER_NOT_FOUND;
-            return $model;
-        }
+        if(!$model) throw new ValidationException((array) Constants::USER_NOT_FOUND);
 
         $role = $this->repositoryRole->find($request->role_id);
         $existUserEmail = $this->repository->findByExist(Constants::USER_EMAIL, $request->email, $id);
 
-        if(!$role){
-            $model->errors = (array) Constants::USER_CREATE_ROLE_NOT_FOUND;
-            return $model;
-        }
+        if(!$role) throw new ValidationException((array) Constants::USER_CREATE_ROLE_NOT_FOUND);
 
-        if($existUserEmail){
-            $model->errors = (array) Constants::USER_CREATE_EMAIL_EXIST;
-            return $model;
-        }
+        if($existUserEmail) throw new ValidationException((array) Constants::USER_CREATE_EMAIL_EXIST);
 
         $model->fill($request->all());
         $model->password = bcrypt($request->password);
         $validator = \Validator::make($request->all(), $model->rules, $model->messages);
         $update = !$validator->fails() ? $this->repository->update($model) : null;
-        if(!$update){
-            $model->errors = $validator->messages()->all();
-        }
+        
+        if(!$update) throw new ValidationException($validator->messages()->all());
 
         return $model;
     }

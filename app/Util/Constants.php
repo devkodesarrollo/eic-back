@@ -12,6 +12,7 @@ class Constants
     const EXPIRED = 'expires_in';
     const NEW_TOKEN = 'new_token';
     const DATA = 'data';
+    const MESSAGE_OK = 'OK';
 
     //API METHODS
     const GET = 'get';
@@ -45,6 +46,7 @@ class Constants
     const USER_CREATE_ROLE_NOT_FOUND = "El rol que intenta asignar al usuario no existe.";
     const USER_CREATE_EMAIL_EXIST = "Ya existe un usuario registrado con el email ingresado.";
     const USER_NOT_FOUND = "El usuario no existe.";
+    const USER_NOT_EXIST_ID = "El id del usuario no existe.";
     const USER_UPDATE_SUCCESS = "Usuario actualizado correctamente.";
     const USER_UPDATE_ERROR = "Ocurrió un error al actualizar el usuario, intente nuevamente.";
     const USER_DELETE_SUCCESS = "Usuario eliminado correctamente.";
