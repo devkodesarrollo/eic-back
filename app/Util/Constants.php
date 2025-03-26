@@ -9,7 +9,8 @@ class Constants
     const ERRORS = 'errors';
     const USER = 'user';
     const TOKEN = 'token';
-    const EXPIRED = 'expires_in';
+    const EXPIRED_IN = 'expires_in';
+    const EXPIRED_AT = 'expires_at';
     const NEW_TOKEN = 'new_token';
     const DATA = 'data';
     const MESSAGE_OK = 'OK';
@@ -28,7 +29,11 @@ class Constants
     const STATUS_UNAUTHORIZED = 401;
     const STATUS_NOT_FOUND = 404;
     const STATUS_ERROR_SERVER = 500;
-    const MESSAGE_ERROR_SERVER = "Ocurrió un error en la petición realizada";
+    const MESSAGE_ERROR_SERVER = "Ocurrió un error en la petición realizada.";
+    const MESSAGE_ERROR_TOKEN_EXPIRED = "Token expirado.";
+    const MESSAGE_ERROR_TOKEN_INVALID = "Token inválido.";
+    const MESSAGE_ERROR_NOT_PROCESS_TOKEN = "No se pudo procesar el token.";
+    const MESSAGE_ERROR_TOKEN_EMPTY = "Token no proporcionado.";
 
     //ATTRIBUTES MODEL USER
     const USER_ID = "id";

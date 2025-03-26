@@ -10,6 +10,8 @@ Route::post('login', [AuthController::class, 'login']);
 
 // Route::group(['middleware' => ['auth:api']], function () {
 
+    Route::post('refresh-token', [AuthController::class, 'refresh']);
+
     Route::group(['prefix' => 'users'], function () {
         Route::get('', [UserController::class, 'all']);
         Route::get('/{id}', [UserController::class, 'find']);

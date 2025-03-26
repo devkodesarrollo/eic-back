@@ -44,6 +44,8 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    protected $with = ['role'];
+
     /**
      * The attributes that should be cast.
      *
@@ -87,5 +89,9 @@ class User extends Authenticatable implements JWTSubject
         }
 
         return $rules;
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }
