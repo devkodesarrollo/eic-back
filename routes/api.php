@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LicitacionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -24,5 +26,8 @@ Route::post('login', [AuthController::class, 'login']);
     Route::group(['prefix' => 'role'], function () {
         Route::get('', [RoleController::class, 'all']);
     });
-    
+
+    Route::group(['prefix' => 'licitaciones'], function () {
+        Route::post('/sincronizar-licitaciones', [LicitacionController::class, 'sincronizarLicitaciones']); // Recibimos 'cantidad' como parámetro
+    });
 // });

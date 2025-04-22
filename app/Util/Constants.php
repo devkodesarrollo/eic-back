@@ -57,6 +57,14 @@ class Constants
     const USER_DELETE_SUCCESS = "Usuario eliminado correctamente.";
     const USER_DELETE_ERROR = "Ocurrió un error al eliminar el usuario, intente nuevamente.";
 
+    const LICITACION_CREATE_SUCCESS = "Licitación creada correctamente.";
+    const LICITACION_CREATE_ERROR = "Ocurrió un error al crear la licitación, intente nuevamente.";
+    const LICITACION_CREATE_PROCESO_EXIST = "Ya existe una licitación registrado con el id_proceso ingresado.";
+    const LICITACION_NOT_FOUND = "La licitación no existe.";
+    const LICITACION_UPDATE_SUCCESS = "Licitación actualizada correctamente.";
+    const LICITACION_UPDATE_ERROR = "Ocurrió un error al actualizar la licitación, intente nuevamente.";
+    const LICITACION_DELETE_SUCCESS = "Licitación eliminada correctamente.";
+    const LICITACION_DELETE_ERROR = "Ocurrió un error al eliminar la licitación, intente nuevamente.";
     const USER_RULES_NAME = "required|string|max:255";
     const USER_RULES_EMAIL = "required|string|email|max:255|unique:users";
     const USER_RULES_EMAIL_2 = "required|string|email";
