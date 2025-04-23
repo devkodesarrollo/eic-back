@@ -9,9 +9,11 @@ class Constants
     const ERRORS = 'errors';
     const USER = 'user';
     const TOKEN = 'token';
-    const EXPIRED = 'expires_in';
+    const EXPIRED_IN = 'expires_in';
+    const EXPIRED_AT = 'expires_at';
     const NEW_TOKEN = 'new_token';
     const DATA = 'data';
+    const MESSAGE_OK = 'OK';
 
     //API METHODS
     const GET = 'get';
@@ -27,21 +29,29 @@ class Constants
     const STATUS_UNAUTHORIZED = 401;
     const STATUS_NOT_FOUND = 404;
     const STATUS_ERROR_SERVER = 500;
-    const MESSAGE_ERROR_SERVER = "Ocurrió un error en la petición realizada";
+    const MESSAGE_ERROR_SERVER = "Ocurrió un error en la petición realizada.";
+    const MESSAGE_ERROR_TOKEN_EXPIRED = "Token expirado.";
+    const MESSAGE_ERROR_TOKEN_INVALID = "Token inválido.";
+    const MESSAGE_ERROR_NOT_PROCESS_TOKEN = "No se pudo procesar el token.";
+    const MESSAGE_ERROR_TOKEN_EMPTY = "Token no proporcionado.";
 
     //ATTRIBUTES MODEL USER
     const USER_ID = "id";
+    const USER_FULL_NAME = "full_name";
     const USER_NAME = "name";
     const USER_EMAIL = "email";
     const USER_PASSWORD = "password";
     const USER_STATE = "state";
     const USER_ROLE_ID = "role_id";
 
+    const USER_LOGIN_INVALID = "No se pudo iniciar sesión, intente nuevamente.";
     const USER_CREATE_SUCCESS = "Usuario creado correctamente.";
+    const USER_REGISTER_SUCCESS = "Usuario registrado correctamente.";
     const USER_CREATE_ERROR = "Ocurrió un error al crear el usuario, intente nuevamente.";
     const USER_CREATE_ROLE_NOT_FOUND = "El rol que intenta asignar al usuario no existe.";
     const USER_CREATE_EMAIL_EXIST = "Ya existe un usuario registrado con el email ingresado.";
     const USER_NOT_FOUND = "El usuario no existe.";
+    const USER_NOT_EXIST_ID = "El id del usuario no existe.";
     const USER_UPDATE_SUCCESS = "Usuario actualizado correctamente.";
     const USER_UPDATE_ERROR = "Ocurrió un error al actualizar el usuario, intente nuevamente.";
     const USER_DELETE_SUCCESS = "Usuario eliminado correctamente.";
@@ -55,4 +65,8 @@ class Constants
     const LICITACION_UPDATE_ERROR = "Ocurrió un error al actualizar la licitación, intente nuevamente.";
     const LICITACION_DELETE_SUCCESS = "Licitación eliminada correctamente.";
     const LICITACION_DELETE_ERROR = "Ocurrió un error al eliminar la licitación, intente nuevamente.";
+    const USER_RULES_NAME = "required|string|max:255";
+    const USER_RULES_EMAIL = "required|string|email|max:255|unique:users";
+    const USER_RULES_EMAIL_2 = "required|string|email";
+    const USER_RULES_PASSWORD = "required|string";
 }

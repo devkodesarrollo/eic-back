@@ -6,8 +6,16 @@ use App\Util\Constants;
 
 abstract class Controller
 {
-    public function resolve($data, $status = null){
-        $status = $status == null ? Constants::STATUS_OK : $status;
-        return response()->json($data, $status);
+    public function resolve(
+        $data = null, 
+        $message = Constants::MESSAGE_OK, 
+        $error = false, 
+        $status = Constants::STATUS_OK
+    ){
+        return response()->json([
+            Constants::ERROR => $error,
+            Constants::MESSAGE => $message,
+            Constants::DATA => $data
+        ], $status);
     }
 }

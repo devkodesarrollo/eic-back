@@ -17,6 +17,6 @@ class RoleController extends Controller{
 
     public function all(){
         $list = $this->getAllRoleService->all();
-        return $this->resolve([Constants::DATA => $list]);
+        return $this->resolve($list);
     }
 }

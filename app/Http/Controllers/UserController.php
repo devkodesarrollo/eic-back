@@ -10,6 +10,8 @@ use App\Services\User\CreateUserService;
 use App\Services\User\UpdateUserService;
 use App\Services\User\ChangeFieldUserService;
 use App\Services\User\DeleteUserService;
+use App\Exceptions\ValidationException;
+use Exception;
 
 class UserController extends Controller{
     private $findUserService;
@@ -36,32 +38,62 @@ class UserController extends Controller{
     }
 
     public function find($id){
-        $model = $this->findUserService->find($id);
-        return !isset($model->errors) ? $this->resolve([Constants::DATA => $model, Constants::ERRORS => []]) : $this->resolve([Constants::DATA => null, Constants::ERRORS => $model->errors], Constants::STATUS_BAD_REQUEST);
+        try{
+            $model = $this->findUserService->find($id);
+            return $this->resolve($model);
+        }catch (ValidationException $e) {
+            return $this->resolve($e->getErrors(), Constants::USER_NOT_FOUND, true, Constants::STATUS_BAD_REQUEST);
+        }catch (Exception $e) {
+            return $this->resolve(null, Constants::MESSAGE_ERROR_SERVER, true, Constants::STATUS_ERROR_SERVER);
+        }        
     }
 
     public function all(){
         $list = $this->getAllUserService->all();
-        return $this->resolve([Constants::DATA => $list]);
+        return $this->resolve($list);
     }
 
     public function save(Request $request){
-        $model = $this->createUserService->save($request);
-        return !isset($model->errors) ? $this->resolve([Constants::MESSAGE => Constants::USER_CREATE_SUCCESS, Constants::ERRORS => []]) : $this->resolve([Constants::MESSAGE => Constants::USER_CREATE_ERROR, Constants::ERRORS => $model->errors], Constants::STATUS_BAD_REQUEST);
+        try{
+            $model = $this->createUserService->save($request);
+            return $this->resolve($model, Constants::USER_CREATE_SUCCESS);
+        }catch (ValidationException $e) {
+            return $this->resolve($e->getErrors(), Constants::USER_CREATE_ERROR, true, Constants::STATUS_BAD_REQUEST);
+        }catch (Exception $e) {
+            return $this->resolve(null, Constants::MESSAGE_ERROR_SERVER, true, Constants::STATUS_ERROR_SERVER);
+        }
     }
 
     public function update(Request $request, $id){
-        $model = $this->updateUserService->update($request, $id);
-        return !isset($model->errors) ? $this->resolve([Constants::MESSAGE => Constants::USER_UPDATE_SUCCESS, Constants::ERRORS => []]) : $this->resolve([Constants::MESSAGE => Constants::USER_UPDATE_ERROR, Constants::ERRORS => $model->errors], Constants::STATUS_BAD_REQUEST);
+        try{
+            $model = $this->updateUserService->update($request, $id);
+            return $this->resolve($model, Constants::USER_UPDATE_SUCCESS);
+        }catch (ValidationException $e) {
+            return $this->resolve($e->getErrors(), Constants::USER_UPDATE_ERROR, true, Constants::STATUS_BAD_REQUEST);
+        }catch (Exception $e) {
+            return $this->resolve(null, Constants::MESSAGE_ERROR_SERVER, true, Constants::STATUS_ERROR_SERVER);
+        }
     }
 
     public function changeField(Request $request, $id){
-        $model = $this->changeFieldUserService->changeField($request, $id);
-        return !isset($model->errors) ? $this->resolve([Constants::MESSAGE => Constants::USER_UPDATE_SUCCESS, Constants::ERRORS => []]) : $this->resolve([Constants::MESSAGE => Constants::USER_UPDATE_ERROR, Constants::ERRORS => $model->errors], Constants::STATUS_BAD_REQUEST);
+        try{
+            $model = $this->changeFieldUserService->changeField($request, $id);
+            return $this->resolve($model, Constants::USER_UPDATE_SUCCESS);
+        }catch (ValidationException $e) {
+            return $this->resolve($e->getErrors(), Constants::USER_UPDATE_ERROR, true, Constants::STATUS_BAD_REQUEST);
+        }catch (Exception $e) {
+            return $this->resolve(null, Constants::MESSAGE_ERROR_SERVER, true, Constants::STATUS_ERROR_SERVER);
+        }        
     }
 
     public function delete($id){
-        $model = $this->deleteUserService->delete($id);
-        return !isset($model->errors) ? $this->resolve([Constants::MESSAGE => Constants::USER_DELETE_SUCCESS, Constants::ERRORS => []]) : $this->resolve([Constants::MESSAGE => Constants::USER_DELETE_ERROR, Constants::ERRORS => $model->errors], Constants::STATUS_BAD_REQUEST);
+        try{
+            $this->deleteUserService->delete($id);
+            return $this->resolve(null, Constants::USER_DELETE_SUCCESS);
+        }catch (ValidationException $e) {
+            return $this->resolve($e->getErrors(), Constants::USER_DELETE_ERROR, true, Constants::STATUS_BAD_REQUEST);
+        }catch (Exception $e) {
+            return $this->resolve(null, Constants::MESSAGE_ERROR_SERVER, true, Constants::STATUS_ERROR_SERVER);
+        }
     }
 }

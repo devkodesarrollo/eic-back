@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Repositories\UserRepository;
 use App\Util\Constants;
+use App\Exceptions\ValidationException;
 
 class FindUserService{
 
@@ -15,10 +16,7 @@ class FindUserService{
 
     public function find($id){
         $model = $this->repository->find($id);
-        if(!$model){
-            $model = $this->repository->new();
-            $model->errors = (array) Constants::USER_NOT_FOUND;
-        }
+        if(!$model) throw new ValidationException((array) Constants::USER_NOT_EXIST_ID);
         return $model;
     }
 
