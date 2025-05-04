@@ -83,8 +83,7 @@ class SincronizarLicitacionesService
                             $licitacion->tipo_de_contrato = $licitacionData['tipo_de_contrato'] ?? null;
                             $licitacion->subtipo_de_contrato = $licitacionData['subtipo_de_contrato'] ?? null;
                             $licitacion->categorias_adicionales = $licitacionData['categorias_adicionales'] ?? null;
-                            $objurl = json_encode($licitacionData['urlproceso']) ?? null;
-                            $licitacion->urlproceso = $objurl["url"] ?? null;
+                            $licitacion->urlproceso = $licitacionData['urlproceso']["url"] ?? null;
                             $licitacion->codigo_entidad = $licitacionData['codigo_entidad'] ?? null;
                             $licitacion->estado_resumen = $licitacionData['estado_resumen'] ?? null;
                             $licitacion->save();
@@ -98,7 +97,7 @@ class SincronizarLicitacionesService
                 return ['message' => 'No se encontraron datos en la respuesta del API'];
             }
         } catch (\Exception $e) {
-            return ['message' => 'Error al consumir el API', 'message' => $e->getMessage()];
+            return ['message' => 'Error al consumir el API -> ' . $e->getMessage()];
         }
     }
 }

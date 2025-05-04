@@ -46,7 +46,7 @@ class SincronizarTrmService
                 return ['message' => 'No se encontraron datos en la respuesta del API'];
             }
         } catch (\Exception $e) {
-            return ['message' => 'Error al consumir el API', 'message' => $e->getMessage()];
+            return ['message' => 'Error al consumir el API -> ' . $e->getMessage()];
         }
     }
 }
