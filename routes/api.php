@@ -36,7 +36,7 @@ Route::post('login', [AuthController::class, 'login']);
     Route::group(['prefix' => 'metrics'], function () {
         Route::post('', [MetricsController::class, 'save']);
         Route::post('/calculate', [MetricsController::class, 'calculate']);
-        Route::get('/report', [MetricsController::class, 'report']);
+        Route::post('/report/get-filters', [MetricsController::class, 'reportGetFilters']);
     });
 
     Route::group(['prefix' => 'trm'], function () {

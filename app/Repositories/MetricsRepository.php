@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use App\Util\Validators;
+use App\Models\Metric;
+
 
 class MetricsRepository extends Repository {
 
@@ -28,7 +30,7 @@ class MetricsRepository extends Repository {
         HAVING TRUNCATE((valor_total_Adjudicacion / precio_base) * 100, 4) BETWEEN $filters->percentageStart AND $filters->percentageEnd";
         
         $result = DB::select($sql);
-        $selecteds = $this->generateRandoms($result, $filters->amount);
+        $selecteds = count($result) > 0 ? $this->generateRandoms($result, $filters->amount) : 0;
 
         //Asignamos el valor del participante segun los años anteriores
         foreach ($selecteds as $selected) {
@@ -55,6 +57,10 @@ class MetricsRepository extends Repository {
         }, $randomKeys);
 
         return $selected;
+    }
+
+    function getByDates($start, $end) {
+        return DB::table('metric')->whereBetween('created_at', [$start, $end])->get();
     }
 
 }
