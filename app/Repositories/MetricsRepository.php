@@ -30,7 +30,7 @@ class MetricsRepository extends Repository {
         HAVING TRUNCATE((valor_total_Adjudicacion / precio_base) * 100, 4) BETWEEN $filters->percentageStart AND $filters->percentageEnd";
         
         $result = DB::select($sql);
-        $selecteds = count($result) > 0 ? $this->generateRandoms($result, $filters->amount) : 0;
+        $selecteds = count($result) > 0 ? $this->generateRandoms($result, $filters->amount) : [];
 
         //Asignamos el valor del participante segun los años anteriores
         foreach ($selecteds as $selected) {
