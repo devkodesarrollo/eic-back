@@ -9,9 +9,10 @@ class CalculateMedianAbsoluteValueService
 {
     function calculate(array $proposals, float $maxScore = 100)
     {
+        
         // Extract the price_participant values
         $values = array_map(fn($p) => $p->price_participant, $proposals);
-
+        
         // Sort values in descending order
         rsort($values);
 

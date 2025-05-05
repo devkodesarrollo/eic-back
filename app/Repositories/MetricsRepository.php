@@ -31,7 +31,7 @@ class MetricsRepository extends Repository {
         
         $result = DB::select($sql);
         $selecteds = count($result) > 0 ? $this->generateRandoms($result, $filters->amount) : [];
-
+        
         //Asignamos el valor del participante segun los años anteriores
         foreach ($selecteds as $selected) {
             $selected->price_participant = $filters->contractValue * ($selected->percentage / 100);
