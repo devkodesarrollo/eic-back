@@ -40,25 +40,21 @@ class CalculateMetricsService
     public function calculate($request)
     {
         $request = (object) $request->all();
-        try {
-            $this->validate($request);
-            $participants = $this->metricsRepository->getByFilters($request);
-            $metrics = (object) [
-                "medianAbsoluteValue" => $this->calculateMedianAbsoluteValueService->calculate($participants),
-                "geometricMean" => $this->calculateGeometricMeanService->calculate($participants),
-                "lowArithmeticMean" => $this->lowArithmeticMeanService->calculate($participants),
-                "lowestValue" => $this->lowestValueService->calculate($participants)
-            ];
-            $probabilitiesTRM = $this->generateProbabilityTRMService
-                                ->generateAnalytics($request->yearStart, $request->yearEnd, $request->participationDay);
-            return [
-                'metricts' => $metrics,
-                'probabilities' => $probabilitiesTRM,
-                'participants' => $participants
-            ];
-        } catch (\Exception $e) {
-            return ['message' => 'Error al consumir el API', 'message' => $e->getMessage()];
-        }
+        $this->validate($request);
+        $participants = $this->metricsRepository->getByFilters($request);
+        $metrics = (object) [
+            "medianAbsoluteValue" => $this->calculateMedianAbsoluteValueService->calculate($participants),
+            "geometricMean" => $this->calculateGeometricMeanService->calculate($participants),
+            "lowArithmeticMean" => $this->lowArithmeticMeanService->calculate($participants),
+            "lowestValue" => $this->lowestValueService->calculate($participants)
+        ];
+        $probabilitiesTRM = $this->generateProbabilityTRMService
+                            ->generateAnalytics($request->yearStart, $request->yearEnd, $request->participationDay);
+        return [
+            'metricts' => $metrics,
+            'probabilities' => $probabilitiesTRM,
+            'participants' => $participants
+        ];
     }
 
     public function validate($request) {
