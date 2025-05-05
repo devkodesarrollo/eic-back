@@ -7,6 +7,7 @@ use App\Repositories\TrmRepository;
 use App\Util\Validators;
 use App\Util\Parser;
 use Illuminate\Support\Collection;
+use Exception;
 
 class GenerateProbabilityTRMService
 {

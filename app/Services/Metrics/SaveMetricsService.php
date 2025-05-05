@@ -7,6 +7,7 @@ use App\Repositories\MetricsRepository;
 use App\Models\Metric;
 use App\Util\Validators;
 use Illuminate\Support\Collection;
+use Exception;
 
 class SaveMetricsService
 {

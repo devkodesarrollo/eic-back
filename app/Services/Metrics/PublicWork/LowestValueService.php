@@ -3,16 +3,13 @@
 namespace App\Services\Metrics\PublicWork;
 
 use Illuminate\Support\Collection;
+use Exception;
 
 class LowestValueService
 {
     function calculate(array $proposals, float $maxScore = 100)
     {
         $n = count($proposals);
-
-        if ($n === 0) {
-            throw new InvalidArgumentException('No proposals provided.');
-        }
 
         // Step 1: Find Vmin
         $values = array_map(fn($p) => $p->price_participant, $proposals);
@@ -27,7 +24,7 @@ class LowestValueService
 
             // Avoid division by zero or invalid values
             if ($vi <= 0) {
-                throw new InvalidArgumentException('price_participant must be greater than zero.');
+                throw new Exception('El precio del participante debe ser mayor a cero.');
             }
 
             $score = $maxScore * ($vmin / $vi);

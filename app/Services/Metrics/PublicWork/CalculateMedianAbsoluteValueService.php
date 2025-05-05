@@ -3,6 +3,7 @@
 namespace App\Services\Metrics\PublicWork;
 
 use Illuminate\Support\Collection;
+use Exception;
 
 class CalculateMedianAbsoluteValueService
 {

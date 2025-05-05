@@ -3,16 +3,13 @@
 namespace App\Services\Metrics\PublicWork;
 
 use Illuminate\Support\Collection;
+use Exception;
 
 class LowArithmeticMeanService
 {
     function calculate(array $proposals, float $maxScore = 100)
     {
         $n = count($proposals);
-
-        if ($n === 0) {
-            throw new InvalidArgumentException('No proposals provided.');
-        }
 
         // Step 1: Find Vmin and calculate simple average (X̄)
         $values = array_map(fn($p) => $p->price_participant, $proposals);

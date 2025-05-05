@@ -11,6 +11,7 @@ use App\Services\Metrics\PublicWork\LowArithmeticMeanService;
 use App\Services\Metrics\PublicWork\LowestValueService;
 use App\Util\Validators;
 use Illuminate\Support\Collection;
+use Exception;
 
 class CalculateMetricsService
 {
