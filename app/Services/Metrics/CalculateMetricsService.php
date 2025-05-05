@@ -43,11 +43,13 @@ class CalculateMetricsService
         $this->validate($request);
         $participants = $this->metricsRepository->getByFilters($request);
         $isValid = count($participants) > 0;
+        if (!$isValid) throw new Exception("No se encontraron participantes validos para el estudio de probabilidades");
+        
         $metrics = (object) [
-            "medianAbsoluteValue" => $isValid ? $this->calculateMedianAbsoluteValueService->calculate($participants) : 0,
-            "geometricMean" => $isValid ? $this->calculateGeometricMeanService->calculate($participants) : 0,
-            "lowArithmeticMean" => $isValid ? $this->lowArithmeticMeanService->calculate($participants) : 0,
-            "lowestValue" => $isValid ? $this->lowestValueService->calculate($participants) : 0
+            "medianAbsoluteValue" => $this->calculateMedianAbsoluteValueService->calculate($participants),
+            "geometricMean" => $this->calculateGeometricMeanService->calculate($participants),
+            "lowArithmeticMean" => $this->lowArithmeticMeanService->calculate($participants),
+            "lowestValue" => $this->lowestValueService->calculate($participants)
         ];
         $probabilitiesTRM = $this->generateProbabilityTRMService
                             ->generateAnalytics($request->yearStart, $request->yearEnd, $request->participationDay);
