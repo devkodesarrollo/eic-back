@@ -5,6 +5,7 @@ namespace App\Services\Metrics;
 use Illuminate\Support\Facades\Http;
 use App\Repositories\TrmRepository;
 use App\Util\Validators;
+use App\Util\Parser;
 use Illuminate\Support\Collection;
 
 class GenerateProbabilityTRMService
@@ -76,7 +77,17 @@ class GenerateProbabilityTRMService
             "lowArithmeticMean" => ($totals->lowArithmeticMean / $amount) * 100,
             "lowestValue" => ($totals->lowestValue / $amount) * 100,
             "quantity" => $amount,
+            "yearStart" => $yearStart,
+            "yearEnd" => $yearEnd,
+            "day" => $this->getDayText($date),
             "analytics" => $selecteds
         ];
+    }
+
+    public function getDayText($date) {
+        $split = explode("-", $date);
+        $day = $split[2];
+        $month = $split[1];
+        return $day . " de " . Parser::getNameMonth($month);
     }
 }
