@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Trm;
+use Illuminate\Support\Facades\DB;
 
 class TrmRepository extends Repository {
 
@@ -20,6 +21,10 @@ class TrmRepository extends Repository {
 
     public function findByAll($column, $value){
         return Trm::where($column, $value)->get();
+    }
+
+    function getByDates($start, $end) {
+        return DB::table('trm')->whereBetween('vigenciadesde', [$start, $end])->get();
     }
 
 }

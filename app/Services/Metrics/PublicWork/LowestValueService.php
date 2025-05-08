@@ -4,6 +4,7 @@ namespace App\Services\Metrics\PublicWork;
 
 use Illuminate\Support\Collection;
 use Exception;
+use App\Util\Constants;
 
 class LowestValueService
 {
@@ -24,7 +25,7 @@ class LowestValueService
 
             // Avoid division by zero or invalid values
             if ($vi <= 0) {
-                throw new Exception('El precio del participante debe ser mayor a cero.');
+                throw new Exception(Constants::ERROR_PRICE_PARTICIPANT_GREATER_ZERO);
             }
 
             $score = $maxScore * ($vmin / $vi);

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Services\Metrics\Report;
+namespace App\Services\Trm\Report;
 
 use Illuminate\Support\Facades\Http;
-use App\Repositories\MetricsRepository;
-use App\Models\Metric;
+use App\Repositories\TrmRepository;
 use App\Util\Validators;
 use Illuminate\Support\Collection;
 use Exception;
@@ -12,19 +11,19 @@ use App\Util\Constants;
 
 class GetFiltersReport
 {
-    private $metricsRepository;
+    private $trmRepository;
 
     public function __construct(
-        MetricsRepository $metricsRepository
+        TrmRepository $trmRepository
     ){
-        $this->metricsRepository = $metricsRepository;
+        $this->trmRepository = $trmRepository;
     }
 
     public function get($_request)
     {
         $request = (object) $_request->all();
         $this->validate($request);
-        return $this->metricsRepository->getByDates($request->startDate, $request->endDate);
+        return $this->trmRepository->getByDates($request->startDate, $request->endDate);
     }
 
     public function validate($request) {

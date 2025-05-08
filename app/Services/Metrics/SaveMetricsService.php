@@ -8,6 +8,7 @@ use App\Models\Metric;
 use App\Util\Validators;
 use Illuminate\Support\Collection;
 use Exception;
+use App\Util\Constants;
 
 class SaveMetricsService
 {
@@ -29,7 +30,7 @@ class SaveMetricsService
     }
 
     public function validate($request) {
-        if (!Validators::isValid($request->name)) throw new Exception("El nombre es requerido");
-        if (!Validators::isValid($request->result)) throw new Exception("El resultado es requerido");
+        if (!Validators::isValid($request->name)) throw new Exception(Constants::NAME_METRICS_REQUIRED);
+        if (!Validators::isValid($request->result)) throw new Exception(Constants::RESULT_METRIC_REQUIRED);
     }
 }

@@ -31,6 +31,7 @@ Route::post('login', [AuthController::class, 'login']);
 
     Route::group(['prefix' => 'licitaciones'], function () {
         Route::post('/sincronizar', [LicitacionController::class, 'sincronizarLicitaciones']); // Recibimos 'cantidad' como parámetro
+        Route::post('/report/get-filters', [LicitacionController::class, 'reportGetFilters']);
     });
 
     Route::group(['prefix' => 'metrics'], function () {
@@ -41,5 +42,6 @@ Route::post('login', [AuthController::class, 'login']);
 
     Route::group(['prefix' => 'trm'], function () {
         Route::post('/sincronizar', [TrmController::class, 'sincronizarTrm']); // Recibimos 'cantidad' como parámetro
+        Route::post('/report/get-filters', [TrmController::class, 'reportGetFilters']);
     });
 // });

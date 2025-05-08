@@ -5,6 +5,7 @@ namespace App\Services\Licitacion;
 use Illuminate\Support\Facades\Http;
 use App\Models\Licitacion;
 use Illuminate\Support\Collection;
+use App\Util\Constants;
 
 class SincronizarLicitacionesService
 {
@@ -92,12 +93,12 @@ class SincronizarLicitacionesService
                         $idsProcesados->push($idProceso); // Marcamos el ID como procesado
                     }
                 }
-                return ['message' => $nuevos . ' licitaciones nuevas sincronizadas exitosamente mayores a ' . $fecha_inicial];
+                return [Constants::MESSAGE => $nuevos . Constants::TENDERS_SUCCESSFULLY_SYNCHRONIZED . $fecha_inicial];
             } else {
-                return ['message' => 'No se encontraron datos en la respuesta del API'];
+                return [Constants::MESSAGE => Constants::RESULT_NOT_FOUND_API];
             }
         } catch (\Exception $e) {
-            return ['message' => 'Error al consumir el API -> ' . $e->getMessage()];
+            return [Constants::MESSAGE => Constants::ERROR_GET_DATA_API . $e->getMessage()];
         }
     }
 }

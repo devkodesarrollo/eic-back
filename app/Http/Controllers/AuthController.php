@@ -24,7 +24,8 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([Constants::ERROR => $validator->errors()], 400);
+            return $this->resolve(null, $validator->errors(), true, Constants::STATUS_BAD_REQUEST);
+            // return response()->json([Constants::ERROR => $validator->errors()], Constants::STATUS_BAD_REQUEST);
         }
 
         // Crear un nuevo usuario
@@ -52,17 +53,21 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([Constants::ERROR => $validator->errors()], 400);
+            return $this->resolve(null, $validator->errors(), true, Constants::STATUS_BAD_REQUEST);
+            // return response()->json([Constants::ERROR => $validator->errors()], Constants::STATUS_BAD_REQUEST);
         }
 
         // Intentar autenticar al usuario y generar el token
         if (!$token = JWTAuth::attempt($request->only(Constants::USER_EMAIL, Constants::USER_PASSWORD))) {
-            return response()->json([Constants::ERROR => Constants::USER_LOGIN_INVALID], 401);
+            return $this->resolve(null, Constants::USER_LOGIN_INVALID, true, Constants::STATUS_UNAUTHORIZED);
         }
 
         $post = (object) $request->all();
 
         $user = User::where(Constants::USER_EMAIL, $post->email)->first();
+        if($user->state == 0){
+            return $this->resolve(null, Constants::USER_LOGIN_INVALID, true, Constants::STATUS_UNAUTHORIZED);
+        }
 
         // Obtener el tiempo de expiración en minutos
         $expiration = JWTAuth::factory()->getTTL();

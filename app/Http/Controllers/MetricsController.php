@@ -32,7 +32,7 @@ class MetricsController extends Controller
             $response = $this->calculateMetricsService->calculate($request);
             return $this->resolve($response);
         } catch (\Exception $e) {
-            return $this->resolve(null, 'Error al calcular los resultados: ' . $e->getMessage(), true);
+            return $this->resolve(null, Constants::ERROR_GENERATE_RESULT . $e->getMessage(), true);
         }
     }
 
@@ -40,19 +40,19 @@ class MetricsController extends Controller
     {
         try{
             $this->saveMetricsService->save($request);
-            return $this->resolve(null, "Registro almacenado exitosamente");
+            return $this->resolve(null, Constants::METRICS_SAVE_SUCCESSFULL);
         } catch (\Exception $e) {
-            return $this->resolve(null, 'Error al calcular los resultados: ' . $e->getMessage(), true);
+            return $this->resolve(null, Constants::ERROR_GENERATE_RESULT . $e->getMessage(), true);
         }
     }
 
-    function reportGetFilters(Request $request){
+    public function reportGetFilters(Request $request){
         try{
             set_time_limit(60 * 60 * 24);
             $response = $this->getFiltersReport->get($request);
             return $this->resolve($response);
         } catch (\Exception $e) {
-            return $this->resolve(null, 'Error al generar el reporte: ' . $e->getMessage(), true);
+            return $this->resolve(null, Constants::ERROR_REPORT_GENERATE . $e->getMessage(), true);
         }
     }
 }
