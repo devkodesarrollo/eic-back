@@ -29,7 +29,7 @@ Route::post('login', [AuthController::class, 'login']);
         Route::get('', [RoleController::class, 'all']);
     });
 
-    Route::group(['prefix' => 'licitaciones'], function () {
+    Route::group(['prefix' => 'tenders'], function () {
         Route::post('/sincronizar', [LicitacionController::class, 'sincronizarLicitaciones']); // Recibimos 'cantidad' como parámetro
         Route::post('/report/get-filters', [LicitacionController::class, 'reportGetFilters']);
     });
