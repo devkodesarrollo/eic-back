@@ -12,7 +12,13 @@ class MetricsRepository extends Repository {
     public function getByFilters($filters) {
         $conditions = "";
         if (Validators::isValid($filters->startValue) && Validators::isValid($filters->endValue)) {
-            $conditions .= "AND precio_base BETWEEN $filters->startValue AND $filters->endValue";
+            $conditions .= " AND precio_base BETWEEN $filters->startValue AND $filters->endValue";
+        }
+        if (Validators::isValid($filters->department)) {
+            $conditions .= " AND departamento_entidad BETWEEN '$filters->department'";
+        }
+        if (Validators::isValid($filters->city)) {
+            $conditions .= " AND ciudad_entidad BETWEEN '$filters->city'";
         }
         $sql = "SELECT 
         id_licitacion as id,
