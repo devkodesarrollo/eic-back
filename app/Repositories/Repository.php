@@ -90,16 +90,16 @@ class Repository
         $constantName = strtoupper($table_name);
         $errorMessage = $e->getMessage();
         $constantValue = $table_name;
-        $array_list_model = Constants::$ARRAY_LIST_MODULES;
+        $array_list_model = Constants::ARRAY_LIST_MODULES;
         $model_name = $array_list_model[$table_name];
         
-        if ($errorCode == Constants::$ERROR_ID_DUPLICATE) {
+        if ($errorCode == Constants::ERROR_ID_DUPLICATE) {
             // Error de clave duplicada
             preg_match("/Duplicate entry '(.*?)' for key '(.*?)'/", $errorMessage, $matches);
             if (count($matches) >= 3) {
                 $nameOfColumnDuplicate = $matches[2];
                 $tableReferenced = strtoupper($this->getReferencedTable($nameOfColumnDuplicate, $table_name));
-                $ConstantTableReferenced = Constants::$$constantName;
+                $ConstantTableReferenced = Constants::$constantName;
             }
 
             if (is_null($tableReferenced) || empty($tableReferenced)) {
@@ -107,10 +107,10 @@ class Repository
             } else {
                 throw new \Exception("No puede registrar dos " . $model_name . " con " . $ConstantTableReferenced . " iguales");
             }
-        } elseif ($errorCode == Constants::$ERROR_LENGTH_EXCEEDED) {
+        } elseif ($errorCode == Constants::ERROR_LENGTH_EXCEEDED) {
             // Error de longitud excedida
             throw new \Exception("Utilice menos caracteres para guardar el registro");
-        } elseif ($errorCode == Constants::$ERROR_FOREIGN_KEY_VIOLATION) {
+        } elseif ($errorCode == Constants::ERROR_FOREIGN_KEY_VIOLATION) {
             // Error de violación de restricción de clave externa
             throw new \Exception("No puede eliminar " . $model_name . " si tiene registros asociados en otro módulo");
         }
