@@ -38,7 +38,6 @@ class MetricsRepository extends Repository {
         $conditions
         GROUP BY 1,2,3,4,5,6
         HAVING TRUNCATE((valor_total_Adjudicacion / precio_base) * 100, 4) BETWEEN $filters->percentageStart AND $filters->percentageEnd";
-        echo $sql;die;
         $result = DB::select($sql);
         $selecteds = count($result) > 0 ? $this->generateRandoms($result, $filters->amount) : [];
         
