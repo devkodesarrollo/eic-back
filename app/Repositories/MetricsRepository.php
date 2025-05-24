@@ -15,10 +15,10 @@ class MetricsRepository extends Repository {
             $conditions .= " AND precio_base BETWEEN $filters->startValue AND $filters->endValue";
         }
         if (Validators::isValid($filters->department)) {
-            $conditions .= " AND departamento_entidad BETWEEN '$filters->department'";
+            $conditions .= " AND departamento_entidad = '$filters->department'";
         }
         if (Validators::isValid($filters->city)) {
-            $conditions .= " AND ciudad_entidad BETWEEN '$filters->city'";
+            $conditions .= " AND ciudad_entidad = '$filters->city'";
         }
         if ($filters->type == "Interventoria") {
             $conditions .= " AND tipo_de_contrato = 'Interventoria'";
@@ -38,7 +38,7 @@ class MetricsRepository extends Repository {
         $conditions
         GROUP BY 1,2,3,4,5,6
         HAVING TRUNCATE((valor_total_Adjudicacion / precio_base) * 100, 4) BETWEEN $filters->percentageStart AND $filters->percentageEnd";
-        
+        echo $sql;die;
         $result = DB::select($sql);
         $selecteds = count($result) > 0 ? $this->generateRandoms($result, $filters->amount) : [];
         
