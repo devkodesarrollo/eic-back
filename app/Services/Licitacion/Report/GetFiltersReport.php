@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Services\Licitacion\Report;
+
+use Illuminate\Support\Facades\Http;
+use App\Repositories\LicitacionRepository;
+use App\Util\Validators;
+use Illuminate\Support\Collection;
+use Exception;
+use App\Util\Constants;
+
+class GetFiltersReport
+{
+    private $licitacionRepository;
+
+    public function __construct(
+        LicitacionRepository $licitacionRepository
+    ){
+        $this->licitacionRepository = $licitacionRepository;
+    }
+
+    public function get($_request)
+    {
+        $request = (object) $_request->all();
+        $this->validate($request);
+        return $this->licitacionRepository->getByDates($request->startDate, $request->endDate);
+    }
+
+    public function validate($request) {
+        if (!Validators::isValid($request->startDate)) throw new Exception(Constants::START_DATE_REQUIRED);
+        if (!Validators::isValid($request->endDate)) throw new Exception(Constants::END_DATE_REQUIRED);
+        $start = date('Y-m-d', strtotime($request->startDate));
+        $end = date('Y-m-d', strtotime($request->endDate));
+        if ($start > $end) throw new Exception(Constants::START_DATE_NOT_GREATER_END_DATE);
+    }
+}
