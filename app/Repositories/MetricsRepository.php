@@ -20,6 +20,10 @@ class MetricsRepository extends Repository {
         if (Validators::isValid($filters->city)) {
             $conditions .= " AND ciudad_entidad BETWEEN '$filters->city'";
         }
+        if ($filters->type == "Interventoria") {
+            $conditions .= " AND tipo_de_contrato = 'Interventoria'";
+        }
+        
         $sql = "SELECT 
         id_licitacion as id,
         referencia_del_proceso as code,
