@@ -35,6 +35,19 @@ class Constants
     const MESSAGE_ERROR_NOT_PROCESS_TOKEN = "No se pudo procesar el token.";
     const MESSAGE_ERROR_TOKEN_EMPTY = "Token no proporcionado.";
 
+    // CODIGOS DE ERROR DE BASE DE DATOS
+   const ERROR_ID_DUPLICATE = 1062;
+   const ERROR_FOREIGN_KEY_VIOLATION = 1451;
+   const ERROR_LENGTH_EXCEEDED = 1406;
+
+   const ARRAY_LIST_MODULES = [
+        "licitacion" => "Licitacion",
+        "metric" => "Métrica",
+        "role" => "Rol",
+        "trm" => "TRM",
+        "User" => "Usuario",
+    ];
+
     //ATTRIBUTES MODEL USER
     const USER_ID = "id";
     const USER_FULL_NAME = "full_name";

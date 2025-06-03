@@ -14,13 +14,19 @@ class MetricsRepository extends Repository {
         if (Validators::isValid($filters->startValue) && Validators::isValid($filters->endValue)) {
             $conditions .= " AND precio_base BETWEEN $filters->startValue AND $filters->endValue";
         }
-        if (Validators::isValid($filters->department)) {
-            $conditions .= " AND departamento_entidad = '$filters->department'";
+        if (Validators::isValid($filters->departments)) {
+            $departments = "'" . implode("','", $filters->departments) . "'";
+            $conditions .= " AND departamento_entidad IN ($departments)";
         }
-        if (Validators::isValid($filters->city)) {
-            $conditions .= " AND ciudad_entidad = '$filters->city'";
+        if (Validators::isValid($filters->cities)) {
+            $cities = "'" . implode("','", $filters->cities) . "'";
+            $conditions .= " AND ciudad_entidad IN ($cities)";
         }
-        if ($filters->type == "Interventoria") {
+        if (!empty($filters->object)) {
+            $object = addslashes($filters->object);
+            $conditions .= " AND nombre_del_procedimiento LIKE '%$object%'";
+        }
+        if (!empty($filters->type) && $filters->type == "Interventoria") {
             $conditions .= " AND tipo_de_contrato = 'Interventoria'";
         }
         
