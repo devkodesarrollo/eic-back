@@ -28,7 +28,7 @@ class MetricsRepository extends Repository {
         }
         if (!empty($filters->object)) {
             $object = addslashes($filters->object);
-            $conditions .= " AND (nombre_del_procedimiento LIKE '%$object%' OR descripcion_procedimiento LIKE '%$object%')";
+            $conditions .= " AND (nombre_del_procedimiento LIKE '%$object%' OR descripci_n_del_procedimiento LIKE '%$object%')";
         }
         if (!empty($filters->type) && $filters->type == "Interventoria") {
             $conditions .= " AND tipo_de_contrato = 'Interventoria'";
@@ -79,7 +79,7 @@ class MetricsRepository extends Repository {
     }
 
     function getByDates($start, $end) {
-        return DB::table('metric')->whereBetween('created_at', [$start, $end])->get();
+        return DB::table('metric')->where('status', 1)->whereBetween('created_at', [$start, $end])->get();
     }
 
 }
