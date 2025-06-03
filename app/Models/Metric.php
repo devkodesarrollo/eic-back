@@ -12,4 +12,9 @@ class Metric extends Model
         'name',
         'result'
     ];
+
+    public $rules = [
+        'name' => 'required',
+        'result' => 'required'
+    ];
 }

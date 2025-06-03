@@ -9,6 +9,10 @@ use App\Models\Metric;
 
 class MetricsRepository extends Repository {
 
+    public function find($value){
+        return Metric::find($value);
+    }
+
     public function getByFilters($filters) {
         $conditions = "";
         if (Validators::isValid($filters->startValue) && Validators::isValid($filters->endValue)) {
@@ -24,7 +28,7 @@ class MetricsRepository extends Repository {
         }
         if (!empty($filters->object)) {
             $object = addslashes($filters->object);
-            $conditions .= " AND nombre_del_procedimiento LIKE '%$object%'";
+            $conditions .= " AND (nombre_del_procedimiento LIKE '%$object%' OR descripcion_procedimiento LIKE '%$object%')";
         }
         if (!empty($filters->type) && $filters->type == "Interventoria") {
             $conditions .= " AND tipo_de_contrato = 'Interventoria'";

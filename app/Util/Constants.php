@@ -108,4 +108,11 @@ class Constants
     const END_DATE_REQUIRED = "La fecha final es requerida.";
     const START_DATE_NOT_GREATER_END_DATE = "La fecha de inicio no puedce ser mayor a la final.";
 
+    const FORMAT_START_DATE_HOUR = " 00:00:00";
+    const FORMAT_END_DATE_HOUR = " 23:59:59";
+
+    const METRICS_NOT_FOUND = "Registro de métrica no encontrado.";
+    const METRICS_DELETE_SUCCESS = "Metríca eliminada correctamente.";
+    const METRICS_DELETE_ERROR = "Ocurrió un error al eliminar el registro de métrica, intente nuevamente.";
+
 }
