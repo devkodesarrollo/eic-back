@@ -23,7 +23,7 @@ class GetFiltersReport
     {
         $request = (object) $_request->all();
         $this->validate($request);
-        return $this->trmRepository->getByDates($request->startDate, $request->endDate);
+        return $this->trmRepository->getByDates($request->startDate.Constants::FORMAT_START_DATE_HOUR, $request->endDate.Constants::FORMAT_END_DATE_HOUR);
     }
 
     public function validate($request) {

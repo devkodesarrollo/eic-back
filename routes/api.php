@@ -38,6 +38,7 @@ Route::post('login', [AuthController::class, 'login']);
         Route::post('', [MetricsController::class, 'save']);
         Route::post('/calculate', [MetricsController::class, 'calculate']);
         Route::post('/report/get-filters', [MetricsController::class, 'reportGetFilters']);
+        Route::patch('/{id}', [MetricsController::class, 'changeField']);
     });
 
     Route::group(['prefix' => 'trm'], function () {
