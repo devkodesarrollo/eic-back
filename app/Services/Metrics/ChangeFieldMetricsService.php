@@ -20,7 +20,6 @@ class ChangeFieldMetricsService{
     public function changeField($request, $id){
         $model = $this->repository->find($id);
         if(!$model) throw new ValidationException((array) Constants::METRICS_NOT_FOUND);
-
         $data = $request->only(array_keys($request->all()));
         $rules = $model->getRules($request->isMethod(Constants::PATCH), $request->all());
         $model->fill($data);

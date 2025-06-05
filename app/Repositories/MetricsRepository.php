@@ -79,7 +79,7 @@ class MetricsRepository extends Repository {
     }
 
     function getByDates($start, $end) {
-        return DB::table('metric')->where('status', 1)->whereBetween('created_at', [$start, $end])->get();
+        return DB::table('metric')->where('state', 1)->whereBetween('created_at', [$start, $end])->get();
     }
 
 }
