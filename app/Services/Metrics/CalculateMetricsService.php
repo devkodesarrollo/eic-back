@@ -67,7 +67,6 @@ class CalculateMetricsService
         if (!Validators::isValid($request->yearEnd)) throw new Exception(Constants::END_YEAR_REQUIRED);
         if (!Validators::isValid($request->contractValue)) throw new Exception(Constants::VALUE_CONTRACT_REQUIRED);
         if (!Validators::isValid($request->amount)) throw new Exception(Constants::TOTAL_PARTICIPANTS_REQUIRED);
-        if (!Validators::isValid($request->modality)) throw new Exception(Constants::CONTRACT_TYPE_REQUIRED);
         if (!Validators::isValid($request->percentageStart)) throw new Exception(Constants::START_PERCENTAGE_REQUIRED);
         if (!Validators::isValid($request->percentageEnd)) throw new Exception(Constants::END_PERCENTAGE_REQUIRED);
         if (!Validators::isValid($request->participationDay)) throw new Exception(Constants::DATE_PARTICIPATION_REQUIRED);
