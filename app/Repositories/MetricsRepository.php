@@ -33,6 +33,8 @@ class MetricsRepository extends Repository {
         if (!empty($filters->type) && $filters->type == "Interventoria") {
             $conditions .= " AND tipo_de_contrato = 'Interventoria'";
         }
+
+        $conditions .= $this->getConditionsCivilAndEnviromentalWorks();
         
         $sql = "SELECT 
         id_licitacion as id,
@@ -57,6 +59,78 @@ class MetricsRepository extends Repository {
             $selected->price_participant = round($selected->price_participant, 4);
         }
         return $selecteds;
+    }
+
+    public function getConditionsCivilAndEnviromentalWorks(){
+        return " AND (
+        (
+            codigo_principal_de_categoria LIKE '301500%' OR
+            codigo_principal_de_categoria LIKE '301600%' OR
+            codigo_principal_de_categoria LIKE '301200%' OR
+            codigo_principal_de_categoria LIKE '301218%' OR
+            codigo_principal_de_categoria LIKE '301400%' OR
+            codigo_principal_de_categoria LIKE '301900%' OR
+            codigo_principal_de_categoria LIKE '302500%' OR
+            codigo_principal_de_categoria LIKE '271200%' OR
+            codigo_principal_de_categoria LIKE '721111%' OR
+            codigo_principal_de_categoria LIKE '721211%' OR
+            codigo_principal_de_categoria LIKE '721212%' OR
+            codigo_principal_de_categoria LIKE '721213%' OR
+            codigo_principal_de_categoria LIKE '721214%' OR
+            codigo_principal_de_categoria LIKE '721215%' OR
+            codigo_principal_de_categoria LIKE '721410%' OR
+            codigo_principal_de_categoria LIKE '721411%' OR
+            codigo_principal_de_categoria LIKE '721412%' OR
+            codigo_principal_de_categoria LIKE '721413%' OR
+            codigo_principal_de_categoria LIKE '721416%' OR
+            codigo_principal_de_categoria LIKE '721519%' OR
+            codigo_principal_de_categoria LIKE '721520%' OR
+            codigo_principal_de_categoria LIKE '721513%' OR
+            codigo_principal_de_categoria LIKE '721514%' OR
+            codigo_principal_de_categoria LIKE '721525%' OR
+            codigo_principal_de_categoria LIKE '721527%' OR
+            codigo_principal_de_categoria LIKE '721512%' OR
+            codigo_principal_de_categoria LIKE '721532%' OR
+            codigo_principal_de_categoria LIKE '721029%' OR
+            codigo_principal_de_categoria LIKE '721033%' OR
+            codigo_principal_de_categoria LIKE '771000%' OR
+            codigo_principal_de_categoria LIKE '771100%'
+        )
+        OR 
+        (
+            categorias_adicionales LIKE '%301500%' OR
+            categorias_adicionales LIKE '%301600%' OR
+            categorias_adicionales LIKE '%301200%' OR
+            categorias_adicionales LIKE '%301218%' OR
+            categorias_adicionales LIKE '%301400%' OR
+            categorias_adicionales LIKE '%301900%' OR
+            categorias_adicionales LIKE '%302500%' OR
+            categorias_adicionales LIKE '%271200%' OR
+            categorias_adicionales LIKE '%721111%' OR
+            categorias_adicionales LIKE '%721211%' OR
+            categorias_adicionales LIKE '%721212%' OR
+            categorias_adicionales LIKE '%721213%' OR
+            categorias_adicionales LIKE '%721214%' OR
+            categorias_adicionales LIKE '%721215%' OR
+            categorias_adicionales LIKE '%721410%' OR
+            categorias_adicionales LIKE '%721411%' OR
+            categorias_adicionales LIKE '%721412%' OR
+            categorias_adicionales LIKE '%721413%' OR
+            categorias_adicionales LIKE '%721416%' OR
+            categorias_adicionales LIKE '%721519%' OR
+            categorias_adicionales LIKE '%721520%' OR
+            categorias_adicionales LIKE '%721513%' OR
+            categorias_adicionales LIKE '%721514%' OR
+            categorias_adicionales LIKE '%721525%' OR
+            categorias_adicionales LIKE '%721527%' OR
+            categorias_adicionales LIKE '%721512%' OR
+            categorias_adicionales LIKE '%721532%' OR
+            categorias_adicionales LIKE '%721029%' OR
+            categorias_adicionales LIKE '%721033%' OR
+            categorias_adicionales LIKE '%771000%' OR
+            categorias_adicionales LIKE '%771100%'
+        )
+        )";
     }
 
     public function generateRandoms($objects, $num_random){
