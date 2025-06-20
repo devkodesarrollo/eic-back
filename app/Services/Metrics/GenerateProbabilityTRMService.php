@@ -35,7 +35,7 @@ class GenerateProbabilityTRMService
         
         for ($year = $yearStart; $year <= $yearEnd ; $year++) { 
             $dateValidation = $year . "-" . $day. " 00:00:00";
-            $trm = $this->trmRepository->findBy("vigenciadesde", $dateValidation);
+            $trm = $this->trmRepository->findByRangeDates($dateValidation);
             if ($trm != null) {
                 $amount++;
                 $value = $trm->valor;
@@ -71,7 +71,6 @@ class GenerateProbabilityTRMService
                 ];
             }
         }
-
         return (object) [
             "medianAbsoluteValue" => ($totals->medianAbsoluteValue / $amount) * 100,
             "geometricMean" => ($totals->geometricMean / $amount) * 100,
