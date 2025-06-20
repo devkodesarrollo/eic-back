@@ -34,8 +34,9 @@ class MetricsRepository extends Repository {
             $conditions .= " AND tipo_de_contrato = 'Interventoria'";
         }
 
-        if (!empty($filters->modality)) {
-            $conditions .= " AND modalidad_de_contratacion = '$filters->modality'";
+        if (Validators::isValid($filters->modality)) {
+            $values = "'" . implode("','", $filters->modality) . "'";
+            $conditions .= " AND modalidad_de_contratacion IN ($values)";
         }
 
         $conditions .= $this->getConditionsCivilAndEnviromentalWorks();
