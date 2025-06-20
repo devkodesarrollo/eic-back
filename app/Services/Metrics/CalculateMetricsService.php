@@ -53,8 +53,10 @@ class CalculateMetricsService
             "lowArithmeticMean" => $this->lowArithmeticMeanService->calculate($participants),
             "lowestValue" => $this->lowestValueService->calculate($participants)
         ];
+        
         $probabilitiesTRM = $this->generateProbabilityTRMService
                             ->generateAnalytics($request->yearStart, $request->yearEnd, $request->participationDay);
+        
         return [
             'metricts' => $metrics,
             'probabilities' => $probabilitiesTRM,

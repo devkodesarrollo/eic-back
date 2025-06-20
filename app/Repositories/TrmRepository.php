@@ -27,4 +27,11 @@ class TrmRepository extends Repository {
         return DB::table('trm')->whereBetween('vigenciadesde', [$start, $end])->get();
     }
 
+    function findByRangeDates($date) {
+        return DB::table('trm')
+        ->where('vigenciadesde', '<=', $date)
+        ->where('vigenciahasta', '>=', $date)
+        ->first();
+    }
+
 }
